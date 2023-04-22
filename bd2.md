@@ -33,7 +33,7 @@
 - le costanti va esplicitato che sono simboli di costante
 - la percentuale si può fare facendo l'elevamento a potenza
     - esempio
-        - se a $x = 100$ si vuole applicare il $2\%$ di sconto per 3 volte, ovvero $\left.\begin{array}{l} x := 100 \\ x = x - 0.02 \cdot x \\ x = x - 0.02 \cdot x \\ x = x - 0.02 \cdot x \end{array} \right.$, tale calcolo è equivalente a $\left . \begin{array}{l} x := 100 \\ x = x - (1 - 0.02 \cdot x)^3 \end{array} \right.$
+        - se a $x = 100$ si vuole applicare il $2\%$ di sconto per 3 volte, ovvero $$\left.\begin{array}{l} x := 100 \\ x = x - 0.02 \cdot x \\ x = x - 0.02 \cdot x \\ x = x - 0.02 \cdot x \end{array} \right.$$ tale calcolo è equivalente a $$\left . \begin{array}{l} x := 100 \\ x = x - (1 - 0.02 \cdot x)^3 \end{array} \right.$$
 
 # QuickHospital
 
