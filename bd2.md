@@ -40,7 +40,10 @@ $$\left. \begin{array}{l}
     x = x - 0.02 \cdot x \\
     x = x - 0.02 \cdot x \\
     x = x - 0.02 \cdot x \end{array} \right.$$
-            tale calcolo è equivalente a
+
+
+        - il calcolo è equivalente a
+
 $$\left. \begin{array}{l}
     x := 100 \\
     x = x - (1 - 0.02 \cdot x)^3 \end{array} \right.$$
