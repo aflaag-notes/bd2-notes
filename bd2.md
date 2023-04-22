@@ -32,8 +32,9 @@
 - divisione per 2 va arrotondata
 - le costanti va esplicitato che sono simboli di costante
 - la percentuale si può fare facendo l'elevamento a potenza
-    - esempio
-        - se a $x = 100$ si vuole applicare il $2\%$ di sconto per 3 volte, ovvero
+    - _esempio_
+
+se a $x = 100$ si vuole applicare il $2\%$ di sconto per 3 volte, ovvero
 
 $$\left. \begin{array}{l}
     x := 100 \\
@@ -41,8 +42,7 @@ $$\left. \begin{array}{l}
     x = x - 0.02 \cdot x \\
     x = x - 0.02 \cdot x \end{array} \right.$$
 
-
-        - il calcolo è equivalente a
+il calcolo è equivalente a
 
 $$\left. \begin{array}{l}
     x := 100 \\
