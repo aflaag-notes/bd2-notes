@@ -8,6 +8,7 @@
     - sia v una variabile tale che $\mathrm{attr}(e, v)$
     - allora, la variabile $d$ tale che $\mathrm{data}(v, d)$ è la data di $v$, e la variabile $o$ tale che $\mathrm{ora}(v, o)$ è l'ora di $v$ 
 - TODO SCRIVI DOMINI RICORRENTI!!!!
+- TODO CONTROLLA VINCOLI DI INTEGRITÀ PER LE RELATIONSHIP E LORO ATTRIBUTI
 
 # TuTubi
 
