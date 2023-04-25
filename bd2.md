@@ -1,14 +1,39 @@
 # Misc
 
-- domini, esempio del simbolo di predicato
+## Domini
+
+- esempio del simbolo di predicato
     - sia $\mathrm{DataOra} \{ \mathrm{data}, \mathrm{ora} \}$ un dominio
     - sia $\mathrm E$ un'entità
     - sia $\mathrm{attr}$ un attributo dell'entità $\mathrm E$, di tipo $\mathrm{DataOra}$
     - sia $e$ una variabile tale che $\mathrm{E}(e)$
     - sia v una variabile tale che $\mathrm{attr}(e, v)$
     - allora, la variabile $d$ tale che $\mathrm{data}(v, d)$ è la data di $v$, e la variabile $o$ tale che $\mathrm{ora}(v, o)$ è l'ora di $v$ 
-- TODO SCRIVI DOMINI RICORRENTI!!!!
+- domini ricorrenti
+    - TODO DA FINIRE
+    - IntervalloOre
+    - Periodo
+    - Denaro
+    - Indirizzo
+        - via: stringa
+        - civico : intero > 0 (0,1)
+        - CAP: stringa di 5 cifre numeriche
+        - città: stringa
+        - nazione: stringa
+    - Telefono
+        - codicePaese: stringa di massimo 5 cifre numeriche secondo standard
+        - numero: stringa di massimo 15 cifre numeriche
+    - CodiceFiscale
+        - composto da stringhe alfanumeriche di 16 caratteri che rispettano i vincoli dei codici fiscali italiani
 - TODO CONTROLLA VINCOLI DI INTEGRITÀ PER LE RELATIONSHIP E LORO ATTRIBUTI
+
+## Vincoli
+
+- vincolo di disgiunzione tra periodi, da imparare a memoria (preso da Officine)
+    - le riparazioni relative allo stesso veicolo hanno periodi disgiunti; il vincolo implica che ogni veicolo può essere associato al più ad una riparazione in corso, e che questa sarà l'ultima in ordine cronologico
+    - $$\forall v, r_1, r_2, a_1, a_2 \quad \\ \mathrm{Veicolo}(v) \land \mathrm{Riparazione}(r_1) \land \mathrm{Riparazione}(r_2) \land \mathrm{veicoloRip}(v, r_1) \land \\ \mathrm{veicoloRip}(v, r_2) \land r_1 \neq r_2 \land \mathrm{accettazione}(r_1, a_1) \land \mathrm{accettazione}(r_2, a_2) \rightarrow \\ \nexists t \quad \mathrm{dataora}(t) \land (t \ge a_1 \land (\forall \hat r_1 \quad \mathrm{riconsegna}(r_1, \hat r_1) \rightarrow t \le \hat r_1)) \land \\ (t \ge a_2 \land (\forall \hat r_2 \quad \mathrm{riconsegna}(r_2, \hat r_2) \rightarrow t \le \hat r_2))$$
+
+****
 
 # TuTubi
 
@@ -16,6 +41,8 @@
 
 - valori distinti e progressivi per gli interi dei video delle playlist
     - per fare la progressione, per ogni valore $p$, ci deve essere un $p - 1$
+
+****
 
 # Rainair
 
@@ -50,6 +77,8 @@ $$\left. \begin{array}{l}
     x := 100 \\
     x = x - (1 - 0.02 \cdot x)^3 \end{array} \right.$$
 
+****
+
 # QuickHospital
 
 ## ER
@@ -64,7 +93,7 @@ $$\left. \begin{array}{l}
 - si può usare sovra-entità di una generalizzazione nei vincoli
 - intervalli
     - data termine ricovero maggiore della data inizio ricovero
-    - lo stesso posto letto non può avere due ricoveri contemporaneamente (impara a memoria il vincolo) TODO SCRIVILO
+    - lo stesso posto letto non può avere due ricoveri contemporaneamente (vincolo scritto nella sezione iniziale, con Officine)
     - un paziente non può prenotare una prestazione esterna mentre è ricoverato (e viceversa)
     - un paziente non può essere ricoverato mentre è già ricoverato
 
@@ -76,4 +105,12 @@ $$\left. \begin{array}{l}
         - criterio: una funzione della forma criterio(e1: Entità, e2: Entità): bool, che definisce il criterio di ordinamento
             - criterio restituisce true se e solo se e1 <= e2
 - posso chiamare più use-case in contemporanea, quindi possono non badare ai vincoli dell'ER
+
+****
+
+# xFit
+
+****
+
+# CoLab
 
