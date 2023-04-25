@@ -100,7 +100,7 @@ $$\left. \begin{array}{l}
 ## Use-Case
 
 - ordinare un insieme di elementi
-    - sorted(S: Entità (0,N), criterio): (e: Entità * n: intero > 0) (0,N)
+    - sorted(S: Entità (0,N), criterio): (e: Entità, n: intero > 0) (0,N)
         - S: insieme da ordinare
         - criterio: una funzione della forma criterio(e1: Entità, e2: Entità): bool, che definisce il criterio di ordinamento
             - criterio restituisce true se e solo se e1 <= e2
