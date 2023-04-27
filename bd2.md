@@ -110,6 +110,23 @@ $$\left. \begin{array}{l}
 
 # xFit
 
+## ER
+
+- unione tra istruttore e dipendenti in un'unica entità, per avere un'unica relationship di contratto, e permettere che un istruttore possa essere un cliente
+    - un dipendente può attraversare i varchi
+- le persone hanno sempre un codice fiscale
+
+## Vincoli esterni
+
+- vincoli esterni di completezza sulle is-a
+- vincolo periodo di vendita legale sul dominio, non sugli abbonamenti
+
+## Use-Case
+
+- le statistiche vanno unite con un solo use-case
+- alle sottrazioni tra date/orari va specificato che non sono interi
+- attenzione alle attività che possono sforare in date successive
+
 ****
 
 # CoLab
