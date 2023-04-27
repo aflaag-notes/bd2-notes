@@ -1,5 +1,9 @@
 # Misc
 
+## ER
+
+- quando c'è un istante di inizio e un istante di fine di un'entità, è sempre necessario mettere un'Entità, e un'EntitàTerminata is-a Entità, altrimenti non è possibile registrare istanze di Entità, quando queste non sono ancora terminate
+
 ## Domini
 
 - esempio del simbolo di predicato
@@ -41,6 +45,10 @@
 
 - valori distinti e progressivi per gli interi dei video delle playlist
     - per fare la progressione, per ogni valore $p$, ci deve essere un $p - 1$
+
+## Use-Case
+
+- per le medie è importante salvare tuple negli insiemi, e non solo i valori, perché altrimenti viene falsata la media
 
 ****
 
