@@ -43,6 +43,19 @@
 
 ****
 
+# Travel to the Moon
+
+## ER
+
+- "modello dei voli", necessario poiché altrimenti si potrebbero creare delle catene con cicli strani
+    - Itinerario - (1,1) - partItin - (0,N) - Destinazione
+    - Itinerario - (1,1) - arrivoItin - (0,N) - Destinazione
+    - Itinerario - (0,N) - tappaItin - (1,1) - Tappa
+    - Tappa - (1,1) - tappaDest - (0,N) - Destinazione
+    - Destinazione - (0,N) - postoDest - (1,N) - Posto
+
+****
+
 # TuTubi
 
 ## Vincoli
@@ -60,6 +73,7 @@
 
 ## ER
 
+- "modello dei voli" (vedi Travel to the Moon)
 - biglietto è una funzionalità, non un'entità
 - entità tipologia del velivolo
 
