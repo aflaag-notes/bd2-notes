@@ -146,7 +146,7 @@ $$\left. \begin{array}{l}
 ## Vincoli esterni
 
 - vincoli esterni di completezza sulle is-a
-- vincolo periodo di vendita legale sul dominio, non sugli abbonamenti
+- vincolo periodo di vendita legale sul dominio, non sugli abbonamenti (il dominio è gestito come se fosse un'entità)
 
 ## Use-Case
 
