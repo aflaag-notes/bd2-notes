@@ -55,6 +55,11 @@
     - Tappa - (1,1) - tappaDest - (0,N) - Destinazione
     - Destinazione - (0,N) - postoDest - (1,N) - Posto
 
+## Use-case
+
+- parametri (0,1), per controllare se esistono bisogna creare una formula che è vera se il valore in input non è definito, oppure vale il valore restituito dal predicato stesso
+    - "siano definite le seguenti formule (aperte in c)"
+
 ****
 
 # TuTubi
@@ -157,4 +162,23 @@ $$\left. \begin{array}{l}
 ****
 
 # CoLab
+
+- fa sboccare sto progetto
+
+****
+
+# EDC
+
+## ER
+
+- relazione a 3 tra carta di credito, ricarica e cliente, in cui la molteplicità deve per forza essere CartaDiCredito - (0,N), poiché altrimenti la carta può fare una sola ricarica, ma serve un vincolo esterno per cui la ricarica può essere fatta da una sola carta
+
+## Vincoli esterni
+
+- controllare che le prenotazioni di un cliente siano pagate con la _sua_ carta, o col _suo_ conto (e altri vincoli simili)
+
+## Use-case
+
+- use-case per trovare il prezzo della prenotazione, prendendo i parametri della prenotazione, perché la prenotazione ancora non esiste
+- login?
 
