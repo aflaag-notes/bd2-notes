@@ -186,3 +186,7 @@ $$\left. \begin{array}{l}
 
 # iHealth
 
+## Vincoli esterni
+
+- un medico non è paziente di sé stesso
+
