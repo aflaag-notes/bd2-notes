@@ -30,7 +30,6 @@
         - numero: stringa di massimo 15 cifre numeriche
     - CodiceFiscale
         - composto da stringhe alfanumeriche di 16 caratteri che rispettano i vincoli dei codici fiscali italiani
-- TODO CONTROLLA VINCOLI DI INTEGRITÀ PER LE RELATIONSHIP E LORO ATTRIBUTI
 
 ## Vincoli
 
