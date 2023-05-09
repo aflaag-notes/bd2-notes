@@ -119,6 +119,7 @@ $$\left. \begin{array}{l}
 - le persone sono solamente medici o pazienti (vincolo esterno), ma i medici possono essere pazienti (relazione is-a, e non generalizzazione, perché disgiunge)
 - il medico non è paziente di sé stesso
 - le stanze hanno un numero di stanza, anche se non c'è scritto
+- specializzazione primaria is-a specializzazione, come relationship
 
 ## Vincoli
 
