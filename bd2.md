@@ -207,3 +207,11 @@ $$\left. \begin{array}{l}
 
 - cosa fare nel caso di chiamata a use-case condizionata?
 
+****
+
+# ecoParks.it
+
+## ER
+
+- i vincoli di integrità devono tutti comprendere cose con molteplicità (1,1)
+
