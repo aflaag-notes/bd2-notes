@@ -190,3 +190,18 @@ $$\left. \begin{array}{l}
 
 - un medico non è paziente di sé stesso
 
+****
+
+# myTunes
+
+## ER
+
+- modello della CPB
+    - la CPB non è un'entità, ma si costruisce con gli slot
+    - l'ascolto non può essere una relationship
+- se ci sono 2 entità E1 E2 collegate da una relazione E1 - (1,1) - rel - (1,1) - E2, al 99% sono la stessa entità
+
+## Use-case
+
+- cosa fare nel caso di chiamata a use-case condizionata?
+
