@@ -36,10 +36,12 @@
 - vincolo di disgiunzione tra periodi, da imparare a memoria (preso da Officine)
     - le riparazioni relative allo stesso veicolo hanno periodi disgiunti; il vincolo implica che ogni veicolo può essere associato al più ad una riparazione in corso, e che questa sarà l'ultima in ordine cronologico
     - $$\forall v, r_1, r_2, a_1, a_2 \quad \\ \mathrm{Veicolo}(v) \land \mathrm{Riparazione}(r_1) \land \mathrm{Riparazione}(r_2) \land \mathrm{veicoloRip}(v, r_1) \land \\ \mathrm{veicoloRip}(v, r_2) \land r_1 \neq r_2 \land \mathrm{accettazione}(r_1, a_1) \land \mathrm{accettazione}(r_2, a_2) \rightarrow \\ \nexists t \quad \mathrm{dataora}(t) \land (t \ge a_1 \land (\forall \hat r_1 \quad \mathrm{riconsegna}(r_1, \hat r_1) \rightarrow t \le \hat r_1)) \land \\ (t \ge a_2 \land (\forall \hat r_2 \quad \mathrm{riconsegna}(r_2, \hat r_2) \rightarrow t \le \hat r_2))$$
+- si possono usare sovraentità, anche di generalizzazioni
 
 ## Use-Case
 
 - quando ho uno use-case che deve creare una is-a dell'input, non va restituita l'istanza in output
+- si possono usare sovraentità, anche di generalizzazioni
 
 ****
 
