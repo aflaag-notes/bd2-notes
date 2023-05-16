@@ -215,3 +215,15 @@ $$\left. \begin{array}{l}
 
 - i vincoli di integrità devono tutti comprendere cose con molteplicità (1,1)
 
+## Vincoli esterni
+
+- animali(r, false), nel caso in cui 'animali' sia l'attributo booleano di un istanza 'r' di un'entità
+
+## UML
+
+- l'utente può effettuare prenotazioni
+
+****
+
+# Mall
+
