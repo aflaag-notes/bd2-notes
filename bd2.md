@@ -76,7 +76,7 @@
 
 ****
 
-# Rainair
+# RainAir
 
 ## ER
 
@@ -201,7 +201,7 @@ $$\left. \begin{array}{l}
 - modello della CPB
     - la CPB non è un'entità, ma si costruisce con gli slot
     - l'ascolto non può essere una relationship
-- se ci sono 2 entità E1 E2 collegate da una relazione E1 - (1,1) - rel - (1,1) - E2, al 99% sono la stessa entità
+- se ci sono 2 entità E1, E2 collegate da una relazione E1 - (1,1) - rel - (1,1) - E2, al 99% sono la stessa entità
 
 ## Use-case
 
@@ -226,4 +226,8 @@ $$\left. \begin{array}{l}
 ****
 
 # Mall
+
+## ER
+
+- se due entità E1, E2 sono in relazione tramite E1 - (0,1) - rel - (1,1) - E2, al 99% E2 is-a E1
 
