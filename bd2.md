@@ -42,7 +42,7 @@
 
 - quando ho uno use-case che deve creare una is-a dell'input, non va restituita l'istanza in output
 - si possono usare sovraentità, anche di generalizzazioni
-- quando chiede il login di un utente, la signature è login(s: stringa): Utente, la precondizione è che deve esistere un utente avente nome "s", e viene restituito tale utente nella postcondizione
+- quando chiede il login di un utente, la signature è login(s: stringa): Utente, la precondizione è che deve esistere un utente avente nome 's', e viene restituito tale utente nella postcondizione
 
 ## Ristrutturazione ER
 
@@ -97,30 +97,88 @@
     - vincoli di foreign key, ogni volta che un insieme di attributi definiscono una chiave di un'altra tabella
 - relazioni
     - accorpamento
+        - si può procedere, in teoria _sempre_, se il vincolo di molteplicità è (X,1)
         - vanno accorpate se sono comode per realizzare gli use-case, quando è frequente accedere a certi dati ottenibili attraverso dale relazione
         - vanno accorpate in un'entità, se sono parte di un identificatore di tale entità
+        - vincolo di identificazione
+            - primario
+                - per poter esprimere i vincoli di identificazione primari, tutti i dati devono essere nella stessa relazione
+            - non primario
+                - i vincoli di identificazione esterni vanno gestiti come vincoli esterni (in FOL)
+        - generalmente si accorpano le relazioni is-a, a fronte di una ristrutturazione senza fusione o duplicazione
     - tabella
-        - oltre agli attributi di relationship, vanno inseriti anche gli attributi degli identificatori delle entità che collega (ed eventuali vincoli di foreign key)
+        - oltre agli attributi di relationship, vanno inseriti anche gli attributi degli identificatori delle entità che collega (ed eventuali vincoli di foreign key, e di inclusione nelle tabelle delle entità che collega)
+    - TODO double checcka tutti questi che stanno qua, just to make sure
     - molteplicità
         - (0,N) - rel - (0,N)
-            - tabella
-                - gli attributi identificatori delle entità che collega sono chiavi
+            - Studente - (0,N) - esame - (0,N) - Corso
+            - Studente(_cf_: char(16), ...)
+            - Corso(_id_: PosInt, ...)
+            - esame(_studente_: char(16), _corso_: PosInt, ...)
+                - primary key (studente, corso)
+                - foreign key studente references Studente(cf)
+                - foreign key corso references Corso(id)
         - (0,1) - rel - (0,N)
-            - tabella
-                - Studente - (0,1) - haTutor - (0,N) - Tutor
-                - la chiave sarà solamente il cf dello studente
-                - vincoli di foreign key su entrambi gli attributi (assumendo haTutor non abbia attributi di relationship)
+            - Studente - (0,1) - haTutor - (0,N) - Tutor
+            - Studente(_cf_: char(16), ...)
+            - Tutor(_id_: PosInt, ...)
+            - haTutor(_studente_: char(16), tutor: PosInt, ...)
+                - primary key (studente)
+                - foreign key studente references Studente(cf)
+                - foreign key tutor references Tutor(id)
         - (0,1) - rel - (0,1)
+            - Docente - (0,1) - presiede - (0,1) - Facolta
             - tabella
-                - TODO un attributo è primary key e l'altro è unique, ma non capisco cosa cambia TODO SCRIVI QUESTO
+                - Docente(_cf_: char(16), ...)
+                - Facolta(_id_: integer, ...)
+                - presiede(_docente_: char(16), facolta: integer, ...)
+                    - primary key (docente)
+                    - foreign key docente references Docente(cf)
+                    - foreign key facolta references Facolta(id)
+                    - unique facolta
+            - accorpamento
+                - versione 1
+                    - Docente(_cf_: char(16))
+                        - TODO primary key?
+                    - Facolta(_id_: integer, ..., preside\*: char(16))
+                        - TODO primary key?
+                        - foreign key preside references Docente(cf)
+                        - unique preside
+                - versione 2
+                    - Docente(_cf_: char(16), facoltaPresieduta\*: integer)
+                        - TODO primary key?
+                        - foreign key facoltaPresieduta references Facolta(id)
+                        - unique facoltaPresieduta
+                    - Facolta(_id_: integer, ...)
+                        - TODO primary key?
         - (1,1) - rel - (0,N)
+            - Studente - (1,1) - iscritto - (0,N) - Università
             - tabella
-                - Studente - (1,1) - iscritto - (0,N) - Università
-                - la chiave sarà solamente il cf dello studente
-                - vincoli di foreign key su entrambi gli attributi (assumento iscritto non abbia attributi di relationship)
-                - nella tabella di Studente, va aggiunto un vincolo di foreign key, in cui cf references iscritto(studente)
-        - (1,N)- rel - (0,N)
-            - TODO da finire
+                - Studente(_cf_: char(16), ...)
+                    - primary key (cf)
+                    - foreign key cf references iscritto(studente)
+                - Università(_nome_: varchar(100), ...)
+                - iscritto(_studente_: università: varchar(100))
+                    - TODO la chiave primaria?
+                    - foreign key studente references Studente(id)
+                    - foreign key università references Università(nome)
+            - accorpamento
+                - Studente(_cf_: char(16), ..., iscritto: varchar(100))
+                    - TODO primary key?
+                    - foreign key iscritto references Università(nome)
+                - Università(_nome_: varchar(100), ...)
+        - (1,N) - rel - (0,N)
+            - Docente - (1,N) - insegna - (0,N) - Corso
+            - Docente(_cf_: char(16), ...)
+                - primary key (cf)
+                - inclusione cf $\subseteq$ insegna(docente)
+            - Corso(_id_: PosInt, ...)
+            - insegna(_docente_: char(16), _corso_: PosInt)
+                - TODO la chiave primaria?
+                - foreign key docente references Docente(cf)
+                - foreign key corso references Corso(id)
+- relazioni n-arie
+    - TODO mo non me va PAG 111R B.3.1.2.3.5
 
 ****
 
@@ -261,7 +319,6 @@ $$\left. \begin{array}{l}
 ## Use-case
 
 - use-case per trovare il prezzo della prenotazione, prendendo i parametri della prenotazione, perché la prenotazione ancora non esiste
-- login?
 
 ****
 
@@ -281,10 +338,6 @@ $$\left. \begin{array}{l}
     - la CPB non è un'entità, ma si costruisce con gli slot
     - l'ascolto non può essere una relationship
 - se ci sono 2 entità E1, E2 collegate da una relazione E1 - (1,1) - rel - (1,1) - E2, al 99% sono la stessa entità
-
-## Use-case
-
-- cosa fare nel caso di chiamata a use-case condizionata?
 
 ****
 
@@ -309,4 +362,10 @@ $$\left. \begin{array}{l}
 ## ER
 
 - se due entità E1, E2 sono in relazione tramite E1 - (0,1) - rel - (1,1) - E2, al 99% E2 is-a E1
+
+****
+
+# iCare
+
+****
 
