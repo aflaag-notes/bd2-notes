@@ -42,6 +42,85 @@
 
 - quando ho uno use-case che deve creare una is-a dell'input, non va restituita l'istanza in output
 - si possono usare sovraentità, anche di generalizzazioni
+- quando chiede il login di un utente, la signature è login(s: stringa): Utente, la precondizione è che deve esistere un utente avente nome "s", e viene restituito tale utente nella postcondizione
+
+## Ristrutturazione ER
+
+- rimozione attributi multivalore (con molteplicità (0,N) o (1,N))
+    - attributo multivalore di entità
+        - entità Abitazione, con attributo indisp (X,N)
+        - diventa Abitazione - (X,N) - indisp - (1,N) ValoreIndisp, dove ValoreIndisp è un'entità avente attributo valore/Periodo (chiave)
+    - attributo multivalore di relationship
+        - Compagnia - (1,N) - sede - (0,N) - Città, dove sede ha tel (1,N)
+        - diventa Compagnia - (1,N) - sCmp - (1,1) - Sede - (1,1) - sCtt - (0,N) - Città, dove Sede è un entità che presenta un vincolo di integrità che comprende sCmp e sCtt, e inoltre Sede - (1,N) - tel - (1,N) - ValoreTel, dove ValoreTel è un'entità che presenta un attributo valore (chiave)
+- creare ogni dominio in SQL
+    - creazione tipi stringa StringS, StringM e StringL (tutti varchar)
+    - creazione tipi IntegerGZ, IntegerGEZ, RealGZ, RealGEZ (non è possibile usare check in type)
+    - controllare che sia possibile implementare i vincoli dei domini
+        - alcuni non sono realizzabili con clausole check, ed è necessario creare un trigger
+    - TODO ci sono altre cose che dovrei scrivere?
+- ristrutturare l'ER
+    - rimuovere is-a e generalizzazioni tra entità
+        - fusione
+            - diventa una sola entità, avente un attributo 'tipo/{'E1', 'E2',...}' con i vari nomi delle varie ex-sottoentità, e comprende anche tutti gli attributi che avevano le sue sottoentità, con molteplicità (0,1)
+            - vanno inseriti vincoli esterni per le relazioni che avevano solamente le sottoentità
+                - se c'è un'istanza di una relazione che aveva solamente E1, allora il tipo è E1
+            - vanno inseriti vincoli per le eventuali disgiunzioni se vi era una generalizzazione
+            - vanno controllate le molteplicità delle relazioni che erano collegate alle is-a, e vanno aggiunti vincoli esterni
+                - se la molteplicità era (1,X), deve diventare (0,X)
+            - vanno inseriti vincoli esterni per gli attributi delle ex-sottoentità
+        - duplicazione
+            - TODO credo si possa fare solamente quando c'è una generalizzazione completa, o una roba del genere
+        - aggiunta relationship
+            - UtenteAttivo is-a Utente
+            - diventa UtenteAttivo - (1,1) - isUtente - (0,1) Utente, e si pone un vincolo di integrità sulla relazione tra UtenteAttivio e Utente, dalla parte di UtenteAttivo
+            - vanno inseriti vincoli esterni nel caso in cui vi era una generalizzazione, per disgiungere
+    - rimuovere is-a tra relazioni
+        - vanno inseriti vincoli esterni
+        - attenzione se le relazioni avevano attributi multivalore (vanno riportate le is-a a cascata)
+    - TODO RELAZIONI TRA PIÙ DI 2 ENTITÀ??
+- scelta identificatori di ogni entità, e scelta di identificatori primari
+    - ogni entità deve avere un identificatore primario, se un'entità non ha attributi chiave, si aggiunge un 'id', ed è anche primario
+    - è possibile (e va fatto) usare i vincoli di integrità come chiavi
+        - controllare che non siano presenti cicli di dipendenze negli identificatori primari
+- riscrivere tutti i vincoli esterni (che hanno subito modifiche) con il nuovo alfabeto
+- TODO VANNO RISCRITTI ANCHE GLI USE CASE?
+
+## Schema relazionale
+
+- entità
+    - una tabella per ogni entità
+    - un'attributo per attributo di entità
+        - gli id sono di tipo serial
+            - quando occorrono in altre tabelle, sono integer, perche serial lo decide il DBMS
+    - definizione della chiave primaria (primary key)
+    - vincoli di foreign key, ogni volta che un insieme di attributi definiscono una chiave di un'altra tabella
+- relazioni
+    - accorpamento
+        - vanno accorpate se sono comode per realizzare gli use-case, quando è frequente accedere a certi dati ottenibili attraverso dale relazione
+        - vanno accorpate in un'entità, se sono parte di un identificatore di tale entità
+    - tabella
+        - oltre agli attributi di relationship, vanno inseriti anche gli attributi degli identificatori delle entità che collega (ed eventuali vincoli di foreign key)
+    - molteplicità
+        - (0,N) - rel - (0,N)
+            - tabella
+                - gli attributi identificatori delle entità che collega sono chiavi
+        - (0,1) - rel - (0,N)
+            - tabella
+                - Studente - (0,1) - haTutor - (0,N) - Tutor
+                - la chiave sarà solamente il cf dello studente
+                - vincoli di foreign key su entrambi gli attributi (assumendo haTutor non abbia attributi di relationship)
+        - (0,1) - rel - (0,1)
+            - tabella
+                - TODO un attributo è primary key e l'altro è unique, ma non capisco cosa cambia TODO SCRIVI QUESTO
+        - (1,1) - rel - (0,N)
+            - tabella
+                - Studente - (1,1) - iscritto - (0,N) - Università
+                - la chiave sarà solamente il cf dello studente
+                - vincoli di foreign key su entrambi gli attributi (assumento iscritto non abbia attributi di relationship)
+                - nella tabella di Studente, va aggiunto un vincolo di foreign key, in cui cf references iscritto(studente)
+        - (1,N)- rel - (0,N)
+            - TODO da finire
 
 ****
 
