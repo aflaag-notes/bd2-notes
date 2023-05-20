@@ -90,6 +90,7 @@
 
 - entità
     - una tabella per ogni entità
+        - è possibile non creare tabelle di alcune entità, nel caso in cui queste abbiano esclusivamente un solo attributo, chiave, e hanno vincoli di inclusione (TODO probabilmente vale lo stesso discorso per il foreign key)
     - un'attributo per attributo di entità
         - gli id sono di tipo serial
             - quando occorrono in altre tabelle, sono integer, perche serial lo decide il DBMS
@@ -105,11 +106,14 @@
                 - per poter esprimere i vincoli di identificazione primari, tutti i dati devono essere nella stessa relazione
             - non primario
                 - i vincoli di identificazione esterni vanno gestiti come vincoli esterni (in FOL)
+        - controllare i vincoli (1,X), poiché bisogna garantire che ci sia un "collegamento" tra le due tabelle
+            - spesso è un inclusione
         - generalmente si accorpano le relazioni is-a, a fronte di una ristrutturazione senza fusione o duplicazione
     - tabella
         - oltre agli attributi di relationship, vanno inseriti anche gli attributi degli identificatori delle entità che collega (ed eventuali vincoli di foreign key, e di inclusione nelle tabelle delle entità che collega)
     - TODO double checcka tutti questi che stanno qua, just to make sure
     - molteplicità
+        - tutti ciò che sta scritto qua assume che non siano presenti vincoli di integrità, ed in tal caso bisogna riportare come chiave tutti gli attributi che li compongono (questo vale anche per gli attributi delle tabelle delle entità, poiché servono tutti quegli attributi per identificare la cosa da collegare)
         - (0,N) - rel - (0,N)
             - Studente - (0,N) - esame - (0,N) - Corso
             - Studente(_cf_: char(16), ...)
@@ -172,6 +176,7 @@
             - Docente(_cf_: char(16), ...)
                 - primary key (cf)
                 - inclusione cf $\subseteq$ insegna(docente)
+                    - questo è di inclusione, poichè 'docente' non forma una chiave di insegna
             - Corso(_id_: PosInt, ...)
             - insegna(_docente_: char(16), _corso_: PosInt)
                 - TODO la chiave primaria?
