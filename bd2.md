@@ -368,9 +368,17 @@ $$\left. \begin{array}{l}
 
 - se due entità E1, E2 sono in relazione tramite E1 - (0,1) - rel - (1,1) - E2, al 99% E2 is-a E1
 
+## Use-Case
+
+- per fare le operazioni sulle playlist, serve anche l'utente in input
+
 ****
 
 # iCare
 
+- è facile
+
 ****
+
+# Workouts
 
