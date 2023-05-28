@@ -38,6 +38,10 @@
     - $$\forall v, r_1, r_2, a_1, a_2 \quad \\ \mathrm{Veicolo}(v) \land \mathrm{Riparazione}(r_1) \land \mathrm{Riparazione}(r_2) \land \mathrm{veicoloRip}(v, r_1) \land \\ \mathrm{veicoloRip}(v, r_2) \land r_1 \neq r_2 \land \mathrm{accettazione}(r_1, a_1) \land \mathrm{accettazione}(r_2, a_2) \rightarrow \\ \nexists t \quad \mathrm{dataora}(t) \land (t \ge a_1 \land (\forall \hat r_1 \quad \mathrm{riconsegna}(r_1, \hat r_1) \rightarrow t \le \hat r_1)) \land \\ (t \ge a_2 \land (\forall \hat r_2 \quad \mathrm{riconsegna}(r_2, \hat r_2) \rightarrow t \le \hat r_2))$$
 - si possono usare sovraentità, anche di generalizzazioni
 
+## UML
+
+- "sistema" NON è un attore
+
 ## Use-Case
 
 - quando ho uno use-case che deve creare una is-a dell'input, non va restituita l'istanza in output
@@ -381,4 +385,12 @@ $$\left. \begin{array}{l}
 ****
 
 # Workouts
+
+- è facile
+
+****
+
+# Alimentary
+
+- le regole devono essere entità, altrimenti non possono essere restituite
 
