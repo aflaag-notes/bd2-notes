@@ -3,7 +3,7 @@
 ## ER
 
 - quando c'è un istante di inizio e un istante di fine di un'entità, è sempre necessario mettere un'Entità, e un'EntitàTerminata is-a Entità, altrimenti non è possibile registrare istanze di Entità, quando queste non sono ancora terminate
-- gli attributi di relationship non possono essere chiave, e non possono essere contenuti in una chiave
+- gli attributi di relationship non possono essere chiave, e non possono essere contenuti in una chiave TODO QUESTA COSA MESA CHE È UNA STRONZATA
 
 ## Domini
 
@@ -30,6 +30,13 @@
         - numero: stringa di massimo 15 cifre numeriche
     - CodiceFiscale
         - composto da stringhe alfanumeriche di 16 caratteri che rispettano i vincoli dei codici fiscali italiani
+    - data:
+        - giorno: ?
+        - mese: ?
+        - anno: ?
+    - dataora
+        - giorno: data
+        - ora: ora
 
 ## Vincoli
 
@@ -47,48 +54,6 @@
 - quando ho uno use-case che deve creare una is-a dell'input, non va restituita l'istanza in output
 - si possono usare sovraentità, anche di generalizzazioni
 - quando chiede il login di un utente, la signature è login(s: stringa): Utente, la precondizione è che deve esistere un utente avente nome 's', e viene restituito tale utente nella postcondizione
-
-## Ristrutturazione ER
-
-- rimozione attributi multivalore (con molteplicità (0,N) o (1,N))
-    - attributo multivalore di entità
-        - entità Abitazione, con attributo indisp (X,N)
-        - diventa Abitazione - (X,N) - indisp - (1,N) ValoreIndisp, dove ValoreIndisp è un'entità avente attributo valore/Periodo (chiave)
-    - attributo multivalore di relationship
-        - Compagnia - (1,N) - sede - (0,N) - Città, dove sede ha tel (1,N)
-        - diventa Compagnia - (1,N) - sCmp - (1,1) - Sede - (1,1) - sCtt - (0,N) - Città, dove Sede è un entità che presenta un vincolo di integrità che comprende sCmp e sCtt, e inoltre Sede - (1,N) - tel - (1,N) - ValoreTel, dove ValoreTel è un'entità che presenta un attributo valore (chiave)
-- creare ogni dominio in SQL
-    - creazione tipi stringa StringS, StringM e StringL (tutti varchar)
-    - creazione tipi IntegerGZ, IntegerGEZ, RealGZ, RealGEZ (non è possibile usare check in type)
-    - controllare che sia possibile implementare i vincoli dei domini
-        - alcuni non sono realizzabili con clausole check, ed è necessario creare un trigger
-    - TODO ci sono altre cose che dovrei scrivere?
-- ristrutturare l'ER
-    - rimuovere is-a e generalizzazioni tra entità
-        - fusione
-            - diventa una sola entità, avente un attributo 'tipo/{'E1', 'E2',...}' con i vari nomi delle varie ex-sottoentità, e comprende anche tutti gli attributi che avevano le sue sottoentità, con molteplicità (0,1)
-            - vanno inseriti vincoli esterni per le relazioni che avevano solamente le sottoentità
-                - se c'è un'istanza di una relazione che aveva solamente E1, allora il tipo è E1
-            - vanno inseriti vincoli per le eventuali disgiunzioni se vi era una generalizzazione
-            - vanno controllate le molteplicità delle relazioni che erano collegate alle is-a, e vanno aggiunti vincoli esterni
-                - se la molteplicità era (1,X), deve diventare (0,X)
-            - vanno inseriti vincoli esterni per gli attributi delle ex-sottoentità
-        - duplicazione
-            - TODO credo si possa fare solamente quando c'è una generalizzazione completa, o una roba del genere
-        - aggiunta relationship
-            - UtenteAttivo is-a Utente
-            - diventa UtenteAttivo - (1,1) - isUtente - (0,1) Utente, e si pone un vincolo di integrità sulla relazione tra UtenteAttivio e Utente, dalla parte di UtenteAttivo
-            - vanno inseriti vincoli esterni nel caso in cui vi era una generalizzazione, per disgiungere
-    - rimuovere is-a tra relazioni
-        - vanno inseriti vincoli esterni
-        - attenzione se le relazioni avevano attributi multivalore (vanno riportate le is-a a cascata)
-    - TODO RELAZIONI TRA PIÙ DI 2 ENTITÀ??
-- scelta identificatori di ogni entità, e scelta di identificatori primari
-    - ogni entità deve avere un identificatore primario, se un'entità non ha attributi chiave, si aggiunge un 'id', ed è anche primario
-    - è possibile (e va fatto) usare i vincoli di integrità come chiavi
-        - controllare che non siano presenti cicli di dipendenze negli identificatori primari
-- riscrivere tutti i vincoli esterni (che hanno subito modifiche) con il nuovo alfabeto
-- TODO VANNO RISCRITTI ANCHE GLI USE CASE?
 
 ## Schema relazionale
 
@@ -386,11 +351,21 @@ $$\left. \begin{array}{l}
 
 # Workouts
 
-- è facile
+## Use-case
+
+- calcolo della lunghezza del percorso
+    - per prendere due tappe consecutive, basta controllare che non esistano tappe in mezzo alle due prese
 
 ****
 
 # Alimentary
 
 - le regole devono essere entità, altrimenti non possono essere restituite
+
+****
+
+# TravelPlan
+
+- TODO ATTIVITA COMPOSTA PER EVITARE L'ALBERO RICORSIVO
+- TODO LA COSA CHE PARTECIPANO TUTTI SE NON PARTECIPA NESSUNO
 
