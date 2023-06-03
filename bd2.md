@@ -54,105 +54,9 @@
 - quando ho uno use-case che deve creare una is-a dell'input, non va restituita l'istanza in output
 - si possono usare sovraentità, anche di generalizzazioni
 - quando chiede il login di un utente, la signature è login(s: stringa): Utente, la precondizione è che deve esistere un utente avente nome 's', e viene restituito tale utente nella postcondizione
-
-## Schema relazionale
-
-- entità
-    - una tabella per ogni entità
-        - è possibile non creare tabelle di alcune entità, nel caso in cui queste abbiano esclusivamente un solo attributo, chiave, e hanno vincoli di inclusione (TODO probabilmente vale lo stesso discorso per il foreign key)
-    - un'attributo per attributo di entità
-        - gli id sono di tipo serial
-            - quando occorrono in altre tabelle, sono integer, perche serial lo decide il DBMS
-    - definizione della chiave primaria (primary key)
-    - vincoli di foreign key, ogni volta che un insieme di attributi definiscono una chiave di un'altra tabella
-- relazioni
-    - accorpamento
-        - si può procedere, in teoria _sempre_, se il vincolo di molteplicità è (X,1)
-        - vanno accorpate se sono comode per realizzare gli use-case, quando è frequente accedere a certi dati ottenibili attraverso dale relazione
-        - vanno accorpate in un'entità, se sono parte di un identificatore di tale entità
-        - vincolo di identificazione
-            - primario
-                - per poter esprimere i vincoli di identificazione primari, tutti i dati devono essere nella stessa relazione
-            - non primario
-                - i vincoli di identificazione esterni vanno gestiti come vincoli esterni (in FOL)
-        - controllare i vincoli (1,X), poiché bisogna garantire che ci sia un "collegamento" tra le due tabelle
-            - spesso è un inclusione
-        - generalmente si accorpano le relazioni is-a, a fronte di una ristrutturazione senza fusione o duplicazione
-    - tabella
-        - oltre agli attributi di relationship, vanno inseriti anche gli attributi degli identificatori delle entità che collega (ed eventuali vincoli di foreign key, e di inclusione nelle tabelle delle entità che collega)
-    - TODO double checcka tutti questi che stanno qua, just to make sure
-    - molteplicità
-        - tutti ciò che sta scritto qua assume che non siano presenti vincoli di integrità, ed in tal caso bisogna riportare come chiave tutti gli attributi che li compongono (questo vale anche per gli attributi delle tabelle delle entità, poiché servono tutti quegli attributi per identificare la cosa da collegare)
-        - (0,N) - rel - (0,N)
-            - Studente - (0,N) - esame - (0,N) - Corso
-            - Studente(_cf_: char(16), ...)
-            - Corso(_id_: PosInt, ...)
-            - esame(_studente_: char(16), _corso_: PosInt, ...)
-                - primary key (studente, corso)
-                - foreign key studente references Studente(cf)
-                - foreign key corso references Corso(id)
-        - (0,1) - rel - (0,N)
-            - Studente - (0,1) - haTutor - (0,N) - Tutor
-            - Studente(_cf_: char(16), ...)
-            - Tutor(_id_: PosInt, ...)
-            - haTutor(_studente_: char(16), tutor: PosInt, ...)
-                - primary key (studente)
-                - foreign key studente references Studente(cf)
-                - foreign key tutor references Tutor(id)
-        - (0,1) - rel - (0,1)
-            - Docente - (0,1) - presiede - (0,1) - Facolta
-            - tabella
-                - Docente(_cf_: char(16), ...)
-                - Facolta(_id_: integer, ...)
-                - presiede(_docente_: char(16), facolta: integer, ...)
-                    - primary key (docente)
-                    - foreign key docente references Docente(cf)
-                    - foreign key facolta references Facolta(id)
-                    - unique facolta
-            - accorpamento
-                - versione 1
-                    - Docente(_cf_: char(16))
-                        - TODO primary key?
-                    - Facolta(_id_: integer, ..., preside\*: char(16))
-                        - TODO primary key?
-                        - foreign key preside references Docente(cf)
-                        - unique preside
-                - versione 2
-                    - Docente(_cf_: char(16), facoltaPresieduta\*: integer)
-                        - TODO primary key?
-                        - foreign key facoltaPresieduta references Facolta(id)
-                        - unique facoltaPresieduta
-                    - Facolta(_id_: integer, ...)
-                        - TODO primary key?
-        - (1,1) - rel - (0,N)
-            - Studente - (1,1) - iscritto - (0,N) - Università
-            - tabella
-                - Studente(_cf_: char(16), ...)
-                    - primary key (cf)
-                    - foreign key cf references iscritto(studente)
-                - Università(_nome_: varchar(100), ...)
-                - iscritto(_studente_: università: varchar(100))
-                    - TODO la chiave primaria?
-                    - foreign key studente references Studente(id)
-                    - foreign key università references Università(nome)
-            - accorpamento
-                - Studente(_cf_: char(16), ..., iscritto: varchar(100))
-                    - TODO primary key?
-                    - foreign key iscritto references Università(nome)
-                - Università(_nome_: varchar(100), ...)
-        - (1,N) - rel - (0,N)
-            - Docente - (1,N) - insegna - (0,N) - Corso
-            - Docente(_cf_: char(16), ...)
-                - primary key (cf)
-                - inclusione cf $\subseteq$ insegna(docente)
-                    - questo è di inclusione, poichè 'docente' non forma una chiave di insegna
-            - Corso(_id_: PosInt, ...)
-            - insegna(_docente_: char(16), _corso_: PosInt)
-                - TODO la chiave primaria?
-                - foreign key docente references Docente(cf)
-                - foreign key corso references Corso(id)
-- relazioni n-arie
-    - TODO mo non me va PAG 111R B.3.1.2.3.5
+- TODO K MINIMI E K MASSIMI
+- nelle precondizioni vanno aggiunte le condizioni dei vincoli esterni
+- nelle precondizioni vanno aggiunte le condizioni delle chiavi dell'ER
 
 ****
 
@@ -366,6 +270,22 @@ $$\left. \begin{array}{l}
 
 # TravelPlan
 
-- TODO ATTIVITA COMPOSTA PER EVITARE L'ALBERO RICORSIVO
-- TODO LA COSA CHE PARTECIPANO TUTTI SE NON PARTECIPA NESSUNO
+## ER
+
+- invece di fare una relazione ricorsiva, creare un'entità AttivitaComposta
+    - Viaggio - (0,N) - ... - (1,1) - AttivitaComposta - (1,N) - ... - (0,N) - AttivitaSingola
+    - Utente - (0,N) - ... - (0,N) - AttivitaComposta - (1,N)
+- LE RELAZIONI POSSONO AVERE ATTRIBUTI CHIAVE/PARTE DI CHIAVE??
+
+****
+
+# SafeOnTheBeach
+
+## Ristrutturazione ER
+
+- rimozione entità Utente
+
+## Use-case SQL
+
+- CAPIRE GROUP BY
 
