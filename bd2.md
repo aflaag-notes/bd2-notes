@@ -3,7 +3,8 @@
 ## ER
 
 - quando c'è un istante di inizio e un istante di fine di un'entità, è sempre necessario mettere un'Entità, e un'EntitàTerminata is-a Entità, altrimenti non è possibile registrare istanze di Entità, quando queste non sono ancora terminate
-- gli attributi di relationship non possono essere chiave, e non possono essere contenuti in una chiave TODO QUESTA COSA MESA CHE È UNA STRONZATA
+- gli attributi di relationship non possono essere chiave, e non possono essere contenuti in una chiave
+- solo gli attributi con molteplicità (1,1) possono essere chiave e/o parte di chiave
 
 ## Domini
 
