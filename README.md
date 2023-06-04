@@ -4,9 +4,10 @@ Appunti di Basi di Dati 2 sui progetti.
 
 ## Domande
 
+- foreach??????
 - bisogna prenotare con prodigit?
 
 ## TODO
 
-- leggi TODO sul file
+- rileggi tutto il file
 

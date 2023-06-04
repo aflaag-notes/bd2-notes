@@ -16,10 +16,9 @@
     - sia v una variabile tale che $\mathrm{attr}(e, v)$
     - allora, la variabile $d$ tale che $\mathrm{data}(v, d)$ è la data di $v$, e la variabile $o$ tale che $\mathrm{ora}(v, o)$ è l'ora di $v$ 
 - domini ricorrenti
-    - TODO DA FINIRE
-    - IntervalloOre
-    - Periodo
     - Denaro
+        - importo: intero >= 0
+        - valuta: stringa di 3 caratteri secondo standard
     - Indirizzo
         - via: stringa
         - civico : intero > 0 (0,1)
@@ -32,9 +31,13 @@
     - CodiceFiscale
         - composto da stringhe alfanumeriche di 16 caratteri che rispettano i vincoli dei codici fiscali italiani
     - data:
-        - giorno: ?
-        - mese: ?
-        - anno: ?
+        - giorno: intero in [1, 31]
+        - mese: intero in [1, 12]
+        - anno: intero >= 0
+    - ora:
+        - ora: intero in [0, 23]
+        - minuti: intero in [0, 59]
+        - secondi: intero in [0, 59]
     - dataora
         - giorno: data
         - ora: ora
@@ -126,6 +129,10 @@ $$\left. \begin{array}{l}
     x := 100 \\
     x = x - (1 - 0.02 \cdot x)^3 \end{array} \right.$$
 
+## Use-case SQL
+
+- poiché la prenotazione può non avere hotel, il fattore moltiplicativo può essere inteso con "h.categoria is null", facendo Prenotazione p left outer join Hotel h on p.hotel = h.id
+
 ****
 
 # QuickHospital
@@ -182,6 +189,14 @@ $$\left. \begin{array}{l}
 # CoLab
 
 - fa sboccare sto progetto
+
+## Use-case
+
+- vanno considerati gli accessi/utilizzi che sono a cavallo tra 2 giorni diversi (e gestire correttamente le intersezioni delle fasce???)
+
+## Use-case SQL
+
+- order by + limit per fare k max/min
 
 ****
 
@@ -276,7 +291,6 @@ $$\left. \begin{array}{l}
 - invece di fare una relazione ricorsiva, creare un'entità AttivitaComposta
     - Viaggio - (0,N) - ... - (1,1) - AttivitaComposta - (1,N) - ... - (0,N) - AttivitaSingola
     - Utente - (0,N) - ... - (0,N) - AttivitaComposta - (1,N)
-- LE RELAZIONI POSSONO AVERE ATTRIBUTI CHIAVE/PARTE DI CHIAVE??
 
 ****
 
@@ -286,7 +300,8 @@ $$\left. \begin{array}{l}
 
 - rimozione entità Utente
 
-## Use-case SQL
+****
 
-- CAPIRE GROUP BY
+# My Precious
 
+****
