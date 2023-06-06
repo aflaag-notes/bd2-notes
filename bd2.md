@@ -53,7 +53,7 @@
 
 - "sistema" NON è un attore
 
-## Use-Case
+## Use-case
 
 - quando ho uno use-case che deve creare una is-a dell'input, non va restituita l'istanza in output
 - si possono usare sovraentità, anche di generalizzazioni
@@ -61,6 +61,10 @@
 - TODO K MINIMI E K MASSIMI
 - nelle precondizioni vanno aggiunte le condizioni dei vincoli esterni
 - nelle precondizioni vanno aggiunte le condizioni delle chiavi dell'ER
+
+## Use-case SQL
+
+- extract("field" from "source")
 
 ****
 
@@ -303,5 +307,28 @@ $$\left. \begin{array}{l}
 ****
 
 # My Precious
+
+## ER
+
+- i biglietti full access e esposizioni permanenti only non dovrebbero essere collegati alle esposizioni, perché le posso visitare tutte quante
+
+## Use-case
+
+- i restauri possono essere iniziati nel periodo dato, o terminati nel periodo dato
+
+## Use-case SQL
+
+- utilizzare le tabelle temporanee per fare gli argmin/argmax
+
+****
+
+# EasyToll
+
+## ER
+
+- veicolo è un'entità da fare, per le disgiunzioni
+- cliente è un'entità da fare
+- gli attraversamenti vanno fatti con le is-a, sia dei caselli che dei tutor
+- relazione tra ClasseVeicolo e Autostrada è una sola
 
 ****
