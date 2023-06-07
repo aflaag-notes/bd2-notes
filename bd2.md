@@ -332,3 +332,12 @@ $$\left. \begin{array}{l}
 - relazione tra ClasseVeicolo e Autostrada è una sola
 
 ****
+
+# House.com
+
+## ER
+
+- la tipologia è generalizzata completamente in 5, con Altro che ha un attributo chiave nome
+- la proprietà cancellata non è un'entità
+
+****
