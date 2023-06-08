@@ -2,7 +2,7 @@
 
 ## ER
 
-- quando c'è un istante di inizio e un istante di fine di un'entità, è sempre necessario mettere un'Entità, e un'EntitàTerminata is-a Entità, altrimenti non è possibile registrare istanze di Entità, quando queste non sono ancora terminate
+- quando c'è un istante di inizio e un istante di fine di un'entità, è quasi sempre necessario mettere un'Entità, e un'EntitàTerminata is-a Entità, altrimenti non è possibile registrare istanze di Entità, quando queste non sono ancora terminate
 - gli attributi di relationship non possono essere chiave, e non possono essere contenuti in una chiave
 - solo gli attributi con molteplicità (1,1) possono essere chiave e/o parte di chiave
 
@@ -58,13 +58,23 @@
 - quando ho uno use-case che deve creare una is-a dell'input, non va restituita l'istanza in output
 - si possono usare sovraentità, anche di generalizzazioni
 - quando chiede il login di un utente, la signature è login(s: stringa): Utente, la precondizione è che deve esistere un utente avente nome 's', e viene restituito tale utente nella postcondizione
-- TODO K MINIMI E K MASSIMI
+- k massimi
+    - $S = \{(p, s) \mid \textrm{Persona}(p) \land \textrm{stipendio}(p, s)\}$
+    - $\textrm{result} = \{(p, s) \mid (p, s) \in S \land |\{(p', s') \mid (p', s') \in S \land p' \neq p \land s \le s'\}| < k\}$
+- k minimi
+    - $S = \{(p, s) \mid \textrm{Persona}(p) \land \textrm{stipendio}(p, s)\}$
+    - $\textrm{result} = \{(p, s) \mid (p, s) \in S \land |\{(p', s') \mid (p', s') \in S \land p' \neq p \land s \ge s'\}| < k\}$
 - nelle precondizioni vanno aggiunte le condizioni dei vincoli esterni
 - nelle precondizioni vanno aggiunte le condizioni delle chiavi dell'ER
+
+## Trigger
+
+- per controllare la disgiunzione di due cose che possono non essere terminate, va controllato solamente se esiste un'altra cosa che inizia prima della new, e o non è finita, o è finita dopo dell'inizio della new, e l'altro caso non va controllato poiché il trigger verrà eseguito nuovamente sull'inserimento dell'altro
 
 ## Use-case SQL
 
 - extract("field" from "source")
+- order by + limit per fare k max/min
 
 ****
 
@@ -72,7 +82,7 @@
 
 ## ER
 
-- "modello dei voli", necessario poiché altrimenti si potrebbero creare delle catene con cicli strani
+- "modello delle tappe", poiché dalla tappa di inizio si parte solamente, e dalla tapa di arrivo si arriva solamente
     - Itinerario - (1,1) - partItin - (0,N) - Destinazione
     - Itinerario - (1,1) - arrivoItin - (0,N) - Destinazione
     - Itinerario - (0,N) - tappaItin - (1,1) - Tappa
@@ -103,19 +113,18 @@
 
 ## ER
 
-- "modello dei voli" (vedi Travel to the Moon)
+- "modello dei voli" (vedi progettino Voli, che contiene anche le tappe)
 - biglietto è una funzionalità, non un'entità
 - entità tipologia del velivolo
 
 ## UML
 
-- il cliente non è attore del sistema, c'è un Sistema Prenotazioni
+- il cliente non è attore del sistema, c'è un Gestore del sistema delle prenotazioni
 
 ## Use-Case
 
 - result può essere inserito dentro una formula FOL
 - divisione per 2 va arrotondata
-- le costanti va esplicitato che sono simboli di costante
 - la percentuale si può fare facendo l'elevamento a potenza
     - _esempio_
 
@@ -135,7 +144,7 @@ $$\left. \begin{array}{l}
 
 ## Use-case SQL
 
-- poiché la prenotazione può non avere hotel, il fattore moltiplicativo può essere inteso con "h.categoria is null", facendo Prenotazione p left outer join Hotel h on p.hotel = h.id
+- poiché la prenotazione può non avere hotel, il fattore moltiplicativo può essere inteso con "h.categoria is null", facendo "Prenotazione p left outer join Hotel h on p.hotel = h.id"
 
 ****
 
@@ -149,23 +158,13 @@ $$\left. \begin{array}{l}
 - le stanze hanno un numero di stanza, anche se non c'è scritto
 - specializzazione primaria is-a specializzazione, come relationship
 
-## Vincoli
-
-- si può usare sovra-entità di una generalizzazione nei vincoli
-- intervalli
-    - data termine ricovero maggiore della data inizio ricovero
-    - lo stesso posto letto non può avere due ricoveri contemporaneamente (vincolo scritto nella sezione iniziale, con Officine)
-    - un paziente non può prenotare una prestazione esterna mentre è ricoverato (e viceversa)
-    - un paziente non può essere ricoverato mentre è già ricoverato
-
 ## Use-Case
 
 - ordinare un insieme di elementi
     - sorted(S: Entità (0,N), criterio): (e: Entità, n: intero > 0) (0,N)
         - S: insieme da ordinare
-        - criterio: una funzione della forma criterio(e1: Entità, e2: Entità): bool, che definisce il criterio di ordinamento
+        - criterio: una funzione della forma criterio(e1: Entità, e2: Entità): boolean, che definisce il criterio di ordinamento
             - criterio restituisce true se e solo se e1 <= e2
-- posso chiamare più use-case in contemporanea, quindi possono non badare ai vincoli dell'ER
 
 ****
 
@@ -185,22 +184,16 @@ $$\left. \begin{array}{l}
 ## Use-Case
 
 - le statistiche vanno unite con un solo use-case
-- alle sottrazioni tra date/orari va specificato che non sono interi
+- alle somme/sottrazioni tra date/orari va specificata l'unità di tempo
 - attenzione alle attività che possono sforare in date successive
 
 ****
 
 # CoLab
 
-- fa sboccare sto progetto
-
 ## Use-case
 
-- vanno considerati gli accessi/utilizzi che sono a cavallo tra 2 giorni diversi (e gestire correttamente le intersezioni delle fasce???)
-
-## Use-case SQL
-
-- order by + limit per fare k max/min
+- vanno considerati gli accessi/utilizzi che sono a cavallo tra 2 giorni diversi (e gestire correttamente le intersezioni delle fasce)
 
 ****
 
@@ -208,7 +201,7 @@ $$\left. \begin{array}{l}
 
 ## ER
 
-- relazione a 3 tra carta di credito, ricarica e cliente, in cui la molteplicità deve per forza essere CartaDiCredito - (0,N), poiché altrimenti la carta può fare una sola ricarica, ma serve un vincolo esterno per cui la ricarica può essere fatta da una sola carta
+- relazione a 3 tra carta di credito, ricarica e cliente, in cui la molteplicità deve per forza essere CartaDiCredito - (0,N), poiché altrimenti la carta può fare una sola ricarica
 
 ## Vincoli esterni
 
@@ -234,7 +227,6 @@ $$\left. \begin{array}{l}
 
 - modello della CPB
     - la CPB non è un'entità, ma si costruisce con gli slot
-    - l'ascolto non può essere una relationship
 - se ci sono 2 entità E1, E2 collegate da una relazione E1 - (1,1) - rel - (1,1) - E2, al 99% sono la stessa entità
 
 ****
@@ -263,7 +255,7 @@ $$\left. \begin{array}{l}
 
 ## Use-Case
 
-- per fare le operazioni sulle playlist, serve anche l'utente in input
+- per fare le operazioni sulle wishlist, serve anche l'utente in input
 
 ****
 
@@ -337,7 +329,7 @@ $$\left. \begin{array}{l}
 
 ## ER
 
-- la tipologia è generalizzata completamente in 5, con Altro che ha un attributo chiave nome
+- la tipologia è generalizzata completamente in 5, con Altro che ha un attributo chiave "nome"
 - la proprietà cancellata non è un'entità
 
 ****
