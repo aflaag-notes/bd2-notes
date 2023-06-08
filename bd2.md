@@ -195,6 +195,56 @@ $$\left. \begin{array}{l}
 
 - vanno considerati gli accessi/utilizzi che sono a cavallo tra 2 giorni diversi (e gestire correttamente le intersezioni delle fasce)
 
+## Use-case SQL
+
+- use-case in sql della prima funzionalita
+
+```
+useCase1(F: Insieme(<da: time, a: time>)): Insieme(<da: time, a: time, m: real>)
+    if |F| == 0:
+        gerare l'errore ...
+    else:
+        tabella temporanea
+
+        TmpFasce(_da_: time, _a_: time, _giorno_: date, numUtenti: integer)
+        
+        foreach <da, a> in F:
+            foreach giorno negli ultimi 30 giorni:
+                Q <- (
+                    select count(u.email) as numUtenti
+                    from Utente u, Utilizzo ut
+                    where ut.utente = u.id
+                    and extract(hour from u.istIn) >= :da
+                    and u.istFin is not null
+                    and extract(hour from u.istFin) <= :a
+                    and extract(day from u.istIn) = :giorno
+                    and extract(day from u.istFin) = :giorno
+                )
+
+                insert into TmpFasce(da, a, giorno, numUtenti) values (:da, :a, :giorno, Q.numUtenti)
+
+        if exists (
+            select * from TmpFasce f
+            where f.da < f.a
+        ) or exists (
+            select * from TmpFasce f1, TmpFasce f2
+            where (f1.inizio, f1.fine)
+            overlaps (f2.inizio, f2.fine)
+        ):
+            generare l'errore ...
+        else:
+            Q <- (
+                select f.da, f.a, avg(f.numUtenti)
+                from TmpFasce f
+                group by f.da, f.a
+            )
+
+            if Q == NULL:
+                generare l'errore ...
+            else:
+                return Q
+```
+
 ****
 
 # EDC
