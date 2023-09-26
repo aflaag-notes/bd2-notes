@@ -1,4 +1,4 @@
 # bd2-notes
 
-Appunti di Basi di Dati 2 sui progetti.
+Appunti sui progetti del corso di **Basi di Dati 2**.
 
